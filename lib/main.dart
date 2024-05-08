@@ -1,10 +1,10 @@
-import 'package:flutter_assignment_new/logic/bloc/sortgroup/sortgroup_bloc.dart';
+import 'package:flutter_assignment_new/bloc/sortgroup/sortgroup_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
 import 'data/repositories/country_repository.dart';
-import 'logic/bloc/countrybloc/country_bloc.dart';
-import 'presentation/screens/home_screen.dart';
+import 'bloc/countrybloc/country_bloc.dart';
+import 'screens/home_screen.dart';
 
 void main() {
   runApp(

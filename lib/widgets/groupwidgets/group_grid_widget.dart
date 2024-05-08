@@ -1,8 +1,10 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:flutter_assignment_new/data/models/country_model.dart';
-import 'package:flutter_assignment_new/presentation/widgets/country_widget.dart';
-import 'package:flutter_assignment_new/presentation/widgets/groupwidgets/group_background_widget.dart';
-import 'package:flutter_assignment_new/presentation/widgets/groupwidgets/group_header_widget.dart';
+import 'package:flutter_assignment_new/widgets/country_widget.dart';
+import 'package:flutter_assignment_new/widgets/groupwidgets/group_background_widget.dart';
+import 'package:flutter_assignment_new/widgets/groupwidgets/group_header_widget.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 class GroupGridWidget extends StatefulWidget {

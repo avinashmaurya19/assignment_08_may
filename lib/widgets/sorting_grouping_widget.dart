@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_assignment_new/logic/bloc/sortgroup/sortgroup_bloc.dart';
+import 'package:flutter_assignment_new/bloc/sortgroup/sortgroup_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../data/constants/constants.dart';
-import '../../logic/bloc/countrybloc/country_bloc.dart';
+import '../data/constants/constants.dart';
+import '../bloc/countrybloc/country_bloc.dart';
 
 class SortGroupWidget extends StatelessWidget {
   const SortGroupWidget({super.key});

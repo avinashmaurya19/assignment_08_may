@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_assignment_new/data/repositories/country_repository.dart';
 
-import '../../../data/models/country_model.dart';
+import '../../data/models/country_model.dart';
 
 part 'country_event.dart';
 part 'country_state.dart';

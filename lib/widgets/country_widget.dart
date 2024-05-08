@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../data/models/country_model.dart';
+import '../data/models/country_model.dart';
 
 class CountryWidget extends StatelessWidget {
   CountryWidget({required this.countryModel, Key? key}) : super(key: key);
