@@ -83,13 +83,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Color.fromARGB(255, 48, 150, 253),
+        backgroundColor: const Color.fromARGB(255, 48, 150, 253),
         title: const Text(
           "Country",
           style: TextStyle(fontSize: 25, color: Colors.white),
         ),
       ),
-      backgroundColor: Color.fromARGB(255, 188, 215, 241),
+      backgroundColor: const Color.fromARGB(255, 188, 215, 241),
       body: BlocBuilder<CountryBloc, CountryState>(
         builder: (context, state) {
           if (state is CountryLoadingState) {
@@ -116,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Container(
                     width: double.infinity,
-                    padding: EdgeInsets.symmetric(vertical: 20),
+                    padding: const EdgeInsets.symmetric(vertical: 20),
                     // margin: const EdgeInsets.symmetric(vertical: 10),
                     decoration: const BoxDecoration(color: Colors.white),
                     child: const SortGroupWidget(),
