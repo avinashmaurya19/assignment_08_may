@@ -83,10 +83,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.teal,
+        backgroundColor: Color.fromARGB(255, 236, 238, 240),
         title: const Text("Country"),
       ),
-      backgroundColor: Colors.grey.shade300,
+      backgroundColor: Color.fromARGB(255, 207, 200, 243),
       body: BlocBuilder<CountryBloc, CountryState>(
         builder: (context, state) {
           if (state is CountryLoadingState) {
@@ -113,20 +113,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Container(
                     width: double.infinity,
+                    // padding: EdgeInsets.symmetric(vertical: 30),
                     margin: const EdgeInsets.symmetric(vertical: 10),
-                    decoration: const BoxDecoration(),
+                    decoration: const BoxDecoration(color: Colors.white),
                     child: const SortGroupWidget(),
                   ),
                   ...sortedGroupedList.map((e) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(vertical: 5),
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade100,
-                        border: Border.all(width: .5),
-                      ),
-                      child: GroupGridWidget(
-                        groupTitle: e.groupTitle,
-                        countryList: e.countryList,
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 5),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade100,
+                          border: Border.all(width: .1),
+                        ),
+                        child: GroupGridWidget(
+                          groupTitle: e.groupTitle,
+                          countryList: e.countryList,
+                        ),
                       ),
                     );
                   })

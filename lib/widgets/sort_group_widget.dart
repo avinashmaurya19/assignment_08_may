@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_assignment_new/bloc/sortgroup/sortgroup_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,8 +21,8 @@ class SortGroupWidget extends StatelessWidget {
             children: [
               buildDropDownButton('sort', context, state),
               buildDropDownButton('group', context, state),
-              ElevatedButton(
-                onPressed: () {
+              GestureDetector(
+                onTap: () {
                   BlocProvider.of<CountryBloc>(context).add(
                     ChangeGroupAndSortEvent(
                       sortValue: state.sortValue,
@@ -29,8 +30,19 @@ class SortGroupWidget extends StatelessWidget {
                     ),
                   );
                 },
-                child: const Text('Apply'),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    border: Border.all(width: 0),
+                  ),
+                  child: const Text(
+                    "Apply",
+                    style: TextStyle(fontSize: 15, color: Colors.white),
+                  ),
+                ),
               ),
+              
             ],
           ),
         );
@@ -44,13 +56,16 @@ class SortGroupWidget extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Sorted By', style: TextStyle(fontSize: 16)),
+            const Text('Sorted By', style: TextStyle(fontSize: 18)),
             DropdownButton<String>(
               value: state.sortValue,
               items: sortItems.map((item) {
                 return DropdownMenuItem(
                   value: item,
-                  child: Text(item),
+                  child: Text(
+                    item,
+                    style: TextStyle(fontSize: 16),
+                  ),
                 );
               }).toList(),
               onChanged: (value) {
@@ -64,13 +79,16 @@ class SortGroupWidget extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Grouped By', style: TextStyle(fontSize: 16)),
+            const Text('Grouped By', style: TextStyle(fontSize: 18)),
             DropdownButton<String>(
               value: state.groupValue,
               items: groupItems.map((item) {
                 return DropdownMenuItem(
                   value: item,
-                  child: Text(item),
+                  child: Text(
+                    item,
+                    style: TextStyle(fontSize: 16),
+                  ),
                 );
               }).toList(),
               onChanged: (value) {
@@ -83,4 +101,3 @@ class SortGroupWidget extends StatelessWidget {
     }
   }
 }
-
