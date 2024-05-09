@@ -26,7 +26,6 @@ class _GroupGridWidgetState extends State<GroupGridWidget> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -42,15 +41,12 @@ class _GroupGridWidgetState extends State<GroupGridWidget> {
                   _expanded = !_expanded;
                 });
               },
-              child: Padding(
-                padding: const EdgeInsets.only(top: 12),
-                child: Container(
-                  alignment: Alignment.center,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  child: Text(widget.groupTitle,
-                      style: const TextStyle(fontSize: 26)),
-                ),
+              child: Container(
+                alignment: Alignment.center,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: Text(widget.groupTitle,
+                    style: const TextStyle(fontSize: 20)),
               ),
             ),
             if (_expanded) ...[
