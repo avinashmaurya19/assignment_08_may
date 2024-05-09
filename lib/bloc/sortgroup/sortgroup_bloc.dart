@@ -7,10 +7,10 @@ part 'sortgroup_state.dart';
 class SortgroupBloc extends Bloc<SortgroupEvent, SortgroupState> {
   SortgroupBloc()
       : super(SortgroupState(sortValue: 'Name', groupValue: 'Continent')) {
-    on<onChangeSortOption>((event, emit) {
+    on<OnChangeSortOption>((event, emit) {
       emit(state.copyWith(sortValue: event.sortValue));
     });
-    on<onChangeGroupOption>((event, emit) {
+    on<OnChangeGroupOption>((event, emit) {
       emit(state.copyWith(groupValue: event.groupValue));
     });
   }

@@ -7,12 +7,12 @@ sealed class SortgroupEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class onChangeSortOption extends SortgroupEvent {
-  String sortValue;
-  onChangeSortOption(this.sortValue);
+class OnChangeSortOption extends SortgroupEvent {
+  final String sortValue;
+  const OnChangeSortOption(this.sortValue);
 }
 
-class onChangeGroupOption extends SortgroupEvent {
-  String groupValue;
-  onChangeGroupOption(this.groupValue);
+class OnChangeGroupOption extends SortgroupEvent {
+  final String groupValue;
+  const OnChangeGroupOption(this.groupValue);
 }

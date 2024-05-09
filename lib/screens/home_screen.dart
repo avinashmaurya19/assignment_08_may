@@ -1,16 +1,82 @@
-
-
 import 'package:flutter/material.dart';
-import 'package:flutter_assignment_new/data/functions/functions.dart';
 import 'package:flutter_assignment_new/data/models/country_group_model.dart';
-import 'package:flutter_assignment_new/widgets/groupwidgets/group_grid_widget.dart';
+import 'package:flutter_assignment_new/data/models/country_model.dart';
+import 'package:flutter_assignment_new/widgets/group_grid_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sliver_tools/sliver_tools.dart';
 import '../bloc/countrybloc/country_bloc.dart';
-import '../widgets/sorting_grouping_widget.dart';
+import '../widgets/sort_group_widget.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+//groups countries based on the selected option (continent, region, subregion, or ungrouped).
+  Map<String, List<CountryModel>> groupCountriesByOption(
+    String groupOption,
+    List<CountryModel> countryList,
+  ) {
+    final Map<String, List<CountryModel>> groupedCountryMap = {};
+
+    switch (groupOption) {
+      case 'Continent':
+        for (var country in countryList) {
+          final key = country.continents;
+          groupedCountryMap.putIfAbsent(key, () => []).add(country);
+        }
+        break;
+
+      case 'Region':
+        for (var country in countryList) {
+          final key = country.region;
+          groupedCountryMap.putIfAbsent(key, () => []).add(country);
+        }
+        break;
+
+      case 'Subregion':
+        for (var country in countryList) {
+          final key = country.subregion;
+          groupedCountryMap.putIfAbsent(key, () => []).add(country);
+        }
+        break;
+
+      case 'Ungrouped':
+        for (var country in countryList) {
+          final key = country.unGrouped;
+          groupedCountryMap.putIfAbsent(key, () => []).add(country);
+        }
+        break;
+
+      default:
+        for (var country in countryList) {
+          final key = country.unGrouped;
+          groupedCountryMap.putIfAbsent(key, () => []).add(country);
+        }
+    }
+
+    return groupedCountryMap;
+  }
+
+// compares two countries based on the selected sorting status (name, area, or population).
+  int compareCountriesForSorting(
+    String sortingStatus,
+    CountryModel country1,
+    CountryModel country2,
+  ) {
+    switch (sortingStatus) {
+      case 'Name':
+        return country1.nameCommon.compareTo(country2.nameCommon);
+      case 'Area':
+        return country2.area.compareTo(country1.area);
+      case 'Population':
+        return country2.population.compareTo(country1.population);
+      default:
+        return country1.nameCommon.compareTo(country2.nameCommon);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,61 +106,56 @@ class HomeScreen extends StatelessWidget {
           }
 
           if (state is CountryLoadedState) {
-            final sortedGroupedList = generateSortedGroupedList(state);
-            return CustomScrollView(
-              slivers: [
-                const SliverToBoxAdapter(child: SortGroupWidget()),
-                MultiSliver(children: buildCountryGroups(sortedGroupedList)),
-              ],
+            final sortedGroupedList = generateSortedCountryGroups(state);
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    decoration: const BoxDecoration(),
+                    child: const SortGroupWidget(),
+                  ),
+                  ...sortedGroupedList.map((e) {
+                    return Container(
+                      margin: const EdgeInsets.symmetric(vertical: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade100,
+                        border: Border.all(width: .5),
+                      ),
+                      child: GroupGridWidget(
+                        groupTitle: e.groupTitle,
+                        countryList: e.countryList,
+                      ),
+                    );
+                  })
+                ],
+              ),
             );
           }
+
           return const Center();
         },
       ),
     );
   }
 
-//   List<MapEntry<String, List<CountryModel>>> generateSortedGroupedList(
-//     CountryLoadedState state,
-//   ) {
-//     return (generateCountryMap(state.groupingStatus, state.countryList)
-//           ..forEach((key, value) {
-//             value.sort((country1, country2) =>
-//                 generateSorting(state.sortingStatus, country1, country2));
-//           }))
-//         .entries
-//         .toList();
-//   }
+//generates a sorted list of country groups based on the current state.
+  List<CountryGroupModel> generateSortedCountryGroups(
+      CountryLoadedState state) {
+    final countryMap =
+        groupCountriesByOption(state.groupingStatus, state.countryList);
 
-//   List<Widget> buildCountryGroups(
-//     List<MapEntry<String, List<CountryModel>>> sortedGroupedList,
-//   ) {
-//     return sortedGroupedList
-//         .map((e) => GroupGridWidget(groupTitle: e.key, countryList: e.value))
-//         .toList();
-//   }
+    countryMap.forEach((key, value) {
+      value.sort((country1, country2) =>
+          compareCountriesForSorting(state.sortingStatus, country1, country2));
+    });
+
+    final countryGroups = countryMap.entries.map((e) {
+      return CountryGroupModel(e.key, e.value);
+    }).toList();
+
+    return countryGroups;
+  }
 }
-
-List<CountryGroupModel> generateSortedGroupedList(CountryLoadedState state) {
-  final countryMap =
-      generateCountryMap(state.groupingStatus, state.countryList);
-
-  countryMap.forEach((key, value) {
-    value.sort((country1, country2) =>
-        generateSorting(state.sortingStatus, country1, country2));
-  });
-
-  final countryGroups = countryMap.entries.map((entry) {
-    return CountryGroupModel(entry.key, entry.value);
-  }).toList();
-
-  return countryGroups;
-}
-
-List<Widget> buildCountryGroups(List<CountryGroupModel> sortedGroupedList) {
-  return sortedGroupedList.map((group) {
-    return GroupGridWidget(
-        groupTitle: group.groupTitle, countryList: group.countryList);
-  }).toList();
-}
-

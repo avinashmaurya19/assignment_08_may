@@ -3,9 +3,9 @@ import 'package:intl/intl.dart';
 import '../data/models/country_model.dart';
 
 class CountryWidget extends StatelessWidget {
-  CountryWidget({required this.countryModel, Key? key}) : super(key: key);
+  CountryWidget({required this.countryList, Key? key}) : super(key: key);
 
-  final CountryModel countryModel;
+  final CountryModel countryList;
 
   final NumberFormat populationFormat =
       NumberFormat('###,###,###,###', 'en_US');
@@ -15,7 +15,7 @@ class CountryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
-        countryModel.nameCommon,
+        countryList.nameCommon,
         textAlign: TextAlign.center,
         style: const TextStyle(fontWeight: FontWeight.bold),
       ),
@@ -28,7 +28,7 @@ class CountryWidget extends StatelessWidget {
             alignment: AlignmentDirectional.center,
             children: [
               Image.network(
-                countryModel.flagPng,
+                countryList.flagPng,
                 color: Colors.white.withOpacity(0.25),
                 colorBlendMode: BlendMode.modulate,
               ),
@@ -37,36 +37,37 @@ class CountryWidget extends StatelessWidget {
                 child: Column(
                   children: [
                     titleGenerator('Common Name'),
-                    Text(countryModel.nameCommon,
+                    Text(countryList.nameCommon,
                         style: const TextStyle(fontSize: 12)),
                     const Divider(thickness: 2),
                     titleGenerator('Official Name'),
-                    Text(countryModel.nameOfficial,
+                    Text(countryList.nameOfficial,
                         style: const TextStyle(fontSize: 12)),
                     const Divider(thickness: 2),
                     rowGenerator(
                       firstHeader: 'Capital',
-                      firstText: countryModel.capital,
+                      firstText: countryList.capital,
                       secondHeader: 'Continent',
-                      secondText: countryModel.continents,
+                      secondText: countryList.continents,
                       firstFlex: 7,
                       secondFlex: 4,
                     ),
                     rowGenerator(
                       firstHeader: 'Population',
                       firstText:
-                          populationFormat.format(countryModel.population),
+                          populationFormat.format(countryList.population),
+                      // firstText: countryModel.population.toString(),
                       secondHeader: 'Region',
-                      secondText: countryModel.region,
+                      secondText: countryList.region,
                       firstFlex: 1,
                       secondFlex: 1,
                     ),
                     rowGenerator(
                       firstHeader: 'Area',
                       firstText:
-                          '${areaFormat.format(countryModel.area)} km\u{00B2}',
+                          '${areaFormat.format(countryList.area)} km\u{00B2}',
                       secondHeader: 'Subregion',
-                      secondText: countryModel.subregion,
+                      secondText: countryList.subregion,
                       firstFlex: 1,
                       secondFlex: 2,
                     ),

@@ -47,11 +47,15 @@ class SortGroupWidget extends StatelessWidget {
             const Text('Sorted By', style: TextStyle(fontSize: 16)),
             DropdownButton<String>(
               value: state.sortValue,
-              items: sortItems.map(buildMenuItem).toList(),
+              items: sortItems.map((item) {
+                return DropdownMenuItem(
+                  value: item,
+                  child: Text(item),
+                );
+              }).toList(),
               onChanged: (value) {
                 BlocProvider.of<SortgroupBloc>(context)
-                    .add(onChangeSortOption(value!));
-                // .onChangeSortOption(value!);
+                    .add(OnChangeSortOption(value!));
               },
             ),
           ],
@@ -63,12 +67,15 @@ class SortGroupWidget extends StatelessWidget {
             const Text('Grouped By', style: TextStyle(fontSize: 16)),
             DropdownButton<String>(
               value: state.groupValue,
-              items: groupItems.map(buildMenuItem).toList(),
+              items: groupItems.map((item) {
+                return DropdownMenuItem(
+                  value: item,
+                  child: Text(item),
+                );
+              }).toList(),
               onChanged: (value) {
-                // BlocProvider.of<SortGroupCubit>(context)
-                //     .onChangeGroupOption(value!);
                 BlocProvider.of<SortgroupBloc>(context)
-                    .add(onChangeGroupOption(value!));
+                    .add(OnChangeGroupOption(value!));
               },
             ),
           ],
@@ -77,9 +84,3 @@ class SortGroupWidget extends StatelessWidget {
   }
 }
 
-DropdownMenuItem<String> buildMenuItem(String item) {
-  return DropdownMenuItem(
-    value: item,
-    child: Text(item),
-  );
-}
