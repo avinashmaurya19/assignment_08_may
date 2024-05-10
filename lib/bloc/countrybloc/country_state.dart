@@ -52,12 +52,7 @@ class CountryErrorState extends CountryState {
   List<Object?> get props => [error];
 }
 
-// class SortNamePopulationState extends CountryState {
-//   SortNamePopulationState({required this.countryList}) ;
-//   List<CountryModel> filteredCountryList;
-//    @override
-//   List<Object?> get props => [filteredCountryList];
-// }
+
 
 class SortNamePopulationState extends CountryState {
 

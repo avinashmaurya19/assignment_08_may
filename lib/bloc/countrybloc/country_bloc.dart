@@ -10,11 +10,11 @@ import '../../data/models/country_model.dart';
 part 'country_event.dart';
 part 'country_state.dart';
 
-enum SortOption { name, population, area }
+// enum SortOption { name, population, area }
 
 class CountryBloc extends Bloc<CountryEvent, CountryState> {
-  List<CountryModel> countryList = [];
-  SortOption _selectedSortOption = SortOption.name;
+  List<CountryModel> filtList = [];
+  // SortOption _selectedSortOption = SortOption.name;
 
   CountryBloc({required this.countryRepository})
       : super(CountryInitialState()) {
@@ -44,44 +44,29 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
       },
     );
 
-    on<ChangeSortEvent>(
-      (event, emit) {
-        log("sort log called");
-        emit((state as CountryLoadedState).copyWith(
-          sortingStatus: event.sortValue,
-          //  sortingStatus:
-          // event.sortValue
-        ));
-      },
-    );
-
     on<SortNamePopulationEvent>(
       (event, emit) {
-        SortOption option = SortOption.values.firstWhere(
-          (element) => element.name == event.option,
-          orElse: () => SortOption.name,
-        );
-        _selectedSortOption = option;
-        List<CountryModel> filteredCountryList = _sortCountryList(option);
-
-        emit(SortNamePopulationState(filteredCountryList: filteredCountryList));
+        filtList = event.filteredCountryList;
+        filtList = _sortCountryList(event.option);
+        // log(filtList.toString());
+        emit(SortNamePopulationState(filteredCountryList: filtList));
       },
     );
   }
 
-  List<CountryModel> _sortCountryList(SortOption option) {
+  List<CountryModel> _sortCountryList(String option) {
     switch (option) {
-      case SortOption.name:
-        countryList.sort((a, b) => a.nameCommon.compareTo(b.nameCommon));
+      case "Name":
+        filtList.sort((a, b) => a.nameCommon.compareTo(b.nameCommon));
         break;
-      case SortOption.population:
-        countryList.sort((b, a) => a.population.compareTo(b.population));
+      case "population":
+        filtList.sort((b, a) => a.population.compareTo(b.population));
         break;
-      case SortOption.area:
-        countryList.sort((b, a) => a.area.compareTo(b.area));
+      case "area":
+        filtList.sort((b, a) => a.area.compareTo(b.area));
         break;
     }
-    return countryList;
+    return filtList;
   }
 
   final CountryRepository countryRepository;

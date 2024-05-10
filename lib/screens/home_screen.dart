@@ -45,12 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
         }
         break;
 
-      // case 'Ungrouped':
-      //   for (var country in countryList) {
-      //     final key = country.unGrouped;
-      //     groupedCountryMap.putIfAbsent(key, () => []).add(country);
-      //   }
-      //   break;
+    
 
       default:
         for (var country in countryList) {
@@ -62,23 +57,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return groupedCountryMap;
   }
 
-// compares two countries based on the selected sorting status (name, area, or population).
-  // int compareCountriesForSorting(
-  //   String sortingStatus,
-  //   CountryModel country1,
-  //   CountryModel country2,
-  // ) {
-  //   switch (sortingStatus) {
-  //     case 'Name':
-  //       return country1.nameCommon.compareTo(country2.nameCommon);
-  //     case 'Area':
-  //       return country2.area.compareTo(country1.area);
-  //     case 'Population':
-  //       return country2.population.compareTo(country1.population);
-  //     default:
-  //       return country1.nameCommon.compareTo(country2.nameCommon);
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -157,10 +135,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final countryMap =
         groupCountriesByOption(state.groupingStatus, state.countryList);
 
-    // countryMap.forEach((key, value) {
-    //   value.sort((country1, country2) =>
-    //       compareCountriesForSorting(state.sortingStatus, country1, country2));
-    // });
 
     final countryGroups = countryMap.entries.map((e) {
       return CountryGroupModel(e.key, e.value);

@@ -13,34 +13,22 @@ class LoadCountryEvent extends CountryEvent {
 class ChangeGroupEvent extends CountryEvent {
   const ChangeGroupEvent(
       {
-      // required this.sortValue,
       required this.groupValue});
 
-  // final String sortValue;
   final String groupValue;
 
   @override
   List<Object?> get props => [
-        // sortValue,
         groupValue
       ];
 }
 
-class ChangeSortEvent extends CountryEvent {
-  const ChangeSortEvent({required this.sortValue});
-  final String sortValue;
-
-  @override
-  List<Object?> get props => [
-        sortValue,
-      ];
-}
-
 class SortNamePopulationEvent extends CountryEvent {
-  final String option;
+   String option;
+  List<CountryModel> filteredCountryList;
 
-  SortNamePopulationEvent({required this.option});
-   @override
+   SortNamePopulationEvent({required this.option,required this.filteredCountryList});
+  @override
   List<Object?> get props => [
         option,
       ];
