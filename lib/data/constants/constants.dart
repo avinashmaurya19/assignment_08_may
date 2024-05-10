@@ -7,7 +7,7 @@ final List<String> groupItems = [
   'Continent',
   'Region',
   'Subregion',
-  'Ungrouped',
+  // 'Ungrouped',
 ];
 
 const String baseUrl = "https://restcountries.com/v3.1/all";

@@ -1,10 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_assignment_new/data/models/country_group_model.dart';
 import 'package:flutter_assignment_new/data/models/country_model.dart';
 import 'package:flutter_assignment_new/widgets/group_grid_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/countrybloc/country_bloc.dart';
-import '../widgets/sort_group_widget.dart';
+import '../widgets/group_dropdown_filter_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key});
@@ -43,12 +45,12 @@ class _HomeScreenState extends State<HomeScreen> {
         }
         break;
 
-      case 'Ungrouped':
-        for (var country in countryList) {
-          final key = country.unGrouped;
-          groupedCountryMap.putIfAbsent(key, () => []).add(country);
-        }
-        break;
+      // case 'Ungrouped':
+      //   for (var country in countryList) {
+      //     final key = country.unGrouped;
+      //     groupedCountryMap.putIfAbsent(key, () => []).add(country);
+      //   }
+      //   break;
 
       default:
         for (var country in countryList) {
@@ -61,22 +63,22 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
 // compares two countries based on the selected sorting status (name, area, or population).
-  int compareCountriesForSorting(
-    String sortingStatus,
-    CountryModel country1,
-    CountryModel country2,
-  ) {
-    switch (sortingStatus) {
-      case 'Name':
-        return country1.nameCommon.compareTo(country2.nameCommon);
-      case 'Area':
-        return country2.area.compareTo(country1.area);
-      case 'Population':
-        return country2.population.compareTo(country1.population);
-      default:
-        return country1.nameCommon.compareTo(country2.nameCommon);
-    }
-  }
+  // int compareCountriesForSorting(
+  //   String sortingStatus,
+  //   CountryModel country1,
+  //   CountryModel country2,
+  // ) {
+  //   switch (sortingStatus) {
+  //     case 'Name':
+  //       return country1.nameCommon.compareTo(country2.nameCommon);
+  //     case 'Area':
+  //       return country2.area.compareTo(country1.area);
+  //     case 'Population':
+  //       return country2.population.compareTo(country1.population);
+  //     default:
+  //       return country1.nameCommon.compareTo(country2.nameCommon);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     // margin: const EdgeInsets.symmetric(vertical: 10),
                     decoration: const BoxDecoration(color: Colors.white),
-                    child: const SortGroupWidget(),
+                    child: const GroupDropDownFilterWidget(),
                   ),
                   ...sortedGroupedList.map((e) {
                     return Padding(
@@ -148,16 +150,17 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-//generates a sorted list of country groups based on the current state.
+// generates a sorted list of country groups based on the current state.
   List<CountryGroupModel> generateSortedCountryGroups(
       CountryLoadedState state) {
+    log("sorting");
     final countryMap =
         groupCountriesByOption(state.groupingStatus, state.countryList);
 
-    countryMap.forEach((key, value) {
-      value.sort((country1, country2) =>
-          compareCountriesForSorting(state.sortingStatus, country1, country2));
-    });
+    // countryMap.forEach((key, value) {
+    //   value.sort((country1, country2) =>
+    //       compareCountriesForSorting(state.sortingStatus, country1, country2));
+    // });
 
     final countryGroups = countryMap.entries.map((e) {
       return CountryGroupModel(e.key, e.value);

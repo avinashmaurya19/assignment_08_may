@@ -7,10 +7,10 @@ sealed class SortgroupEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class OnChangeSortOption extends SortgroupEvent {
-  final String sortValue;
-  const OnChangeSortOption(this.sortValue);
-}
+// class OnChangeSortOption extends SortgroupEvent {
+//   final String sortOption;
+//   const OnChangeSortOption(this.sortOption);
+// }
 
 class OnChangeGroupOption extends SortgroupEvent {
   final String groupValue;
